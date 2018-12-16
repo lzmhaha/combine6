@@ -3,8 +3,6 @@ import { Util } from "../util";
 import GameData, { MOVE_RESULT } from "../game-data";
 import Shake from "./function/shake";
 
-declare let wx: any;
-
 export enum GAME_STATE {
     IDLE = 'IDLE',      // 待机中
     MOVING = 'MOVING',  // 方块移动中
@@ -60,9 +58,20 @@ export default class GameCtrl extends cc.Component {
         this._start();
 
         if(CC_WECHATGAME) {
-            wx.showShareMenu({
+            // wx.showShareMenu({
                 
-            })
+            // })
+
+            // 显示游戏圈按钮
+            // wx.createGameClubButton({
+            //     icon: 'white',
+            //     style: {
+            //       left: 10,
+            //       top: 76,
+            //       width: 40,
+            //       height: 40
+            //     }
+            // })
         }
     }
 
@@ -113,7 +122,17 @@ export default class GameCtrl extends cc.Component {
         cc.sys.localStorage.setItem('game-data', null);
         this.state = GAME_STATE.OVER;
         this.gameOverLayer.active = true;
-        this.lbOverScore.string = String(this.data.getScore());
+        let score = this.data.getScore();
+        this.lbOverScore.string = String(score);
+
+        // 上传分数
+        // TODO: 从子域获取最高分
+        if(CC_WECHATGAME) {
+            wx.setUserCloudStorage({
+                KVDataList: [{key: 'score', value: String(score)}],
+                success: () => {console.log(`upload score success, score: ${score}`)},
+            })
+        }
     }
 
     private _onPlayAgain(): void {
