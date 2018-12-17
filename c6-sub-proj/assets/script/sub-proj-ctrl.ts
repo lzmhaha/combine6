@@ -93,13 +93,15 @@ export default class NewClass extends cc.Component {
                     return score1 - score2;
                 });
 
-                for(let d of userDatas) {
+                for(let i = 0; i < userDatas.length; i++) {
+                    let d = userDatas[i]
                     let item = cc.instantiate(this.item);
                     let img = new Image();
                     img.src = d.avatarUrl;
                     img.onload = () => {
                         let tex = new cc.Texture2D()
                         tex.initWithElement(img);
+                        item.getChildByName('rank').getComponent(cc.Label).string = String(i + 1);
                         item.getChildByName('head').getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(tex);
                         let name = item.getChildByName('name').getComponent(cc.Label);
                         name.string = d.nickname;

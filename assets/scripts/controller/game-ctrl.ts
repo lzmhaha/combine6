@@ -154,9 +154,9 @@ export default class GameCtrl extends cc.Component {
         // 上传分数
         // TODO: 从子域获取最高分
         if(CC_WECHATGAME) {
-            wx.setUserCloudStorage({
-                KVDataList: [{key: 'score', value: String(score)}],
-                success: () => {console.log(`upload score success, score: ${score}`)},
+            wx.getOpenDataContext().postMessage({
+                type: 'SCORE',
+                score: String(score)
             })
         }
     }
