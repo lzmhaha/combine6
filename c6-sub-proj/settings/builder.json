@@ -27,22 +27,21 @@
     "portrait": false,
     "upsideDown": false
   },
-  "packageName": "org.cocos2d.combine6",
+  "packageName": "org.cocos2d.c6-sub-proj",
   "privateKey": "",
   "qqplay": {
     "REMOTE_SERVER_ROOT": "",
     "orientation": "portrait"
   },
-  "startScene": "2692976a-40b8-4ec8-be7e-da8b67731aee",
-  "title": "combine6",
+  "startScene": "7374a384-49ba-4503-ba7f-17b6c4f8f2d9",
+  "title": "c6-sub-proj",
   "webOrientation": "auto",
   "wechatgame": {
     "REMOTE_SERVER_ROOT": "",
-    "appid": "wxa29602f8b4373915",
-    "isSubdomain": false,
+    "appid": "wx6ac3f5090a6b99c5",
     "orientation": "portrait",
-    "subContext": "c6-sub-proj"
+    "subContext": ""
   },
-  "xxteaKey": "ac783eb6-bfd6-48",
+  "xxteaKey": "11319569-4762-45",
   "zipCompressJs": true
 }

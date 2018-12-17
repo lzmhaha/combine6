@@ -39,6 +39,18 @@ export default class GameCtrl extends cc.Component {
     @property(cc.Node)
     btnPlayAgain: cc.Node = null;
 
+    @property(cc.WXSubContextView)
+    subView: cc.WXSubContextView = null;
+
+    @property(cc.Node)
+    btnRank: cc.Node = null;
+
+    @property(cc.Node)
+    btnCloseRank: cc.Node = null;
+
+    @property(cc.Node)
+    rankPanel: cc.Node = null;
+
     public data: GameData;
     public state: GAME_STATE;
 
@@ -72,7 +84,21 @@ export default class GameCtrl extends cc.Component {
             //       height: 40
             //     }
             // })
+
+            // wx.getOpenDataContext().postMessage({
+            //     type: 'RESIZE',
+            //     data: JSON.stringify({width: cc.winSize.width, height: cc.winSize.height})
+            // });
+            // this.subView.updateSubContextViewport()
+
+            this.btnRank.on('click', () => {
+                this.rankPanel.active = true;
+                wx.getOpenDataContext().postMessage({type: 'SHOW_RANK'});
+            });
+            this.btnCloseRank.on('click', () => {this.rankPanel.active = false;});
         }
+
+        this.subView.updateSubContextViewport()
     }
 
     protected onDestroy (): void{
