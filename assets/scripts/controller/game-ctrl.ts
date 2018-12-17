@@ -156,7 +156,7 @@ export default class GameCtrl extends cc.Component {
         if(CC_WECHATGAME) {
             wx.getOpenDataContext().postMessage({
                 type: 'SCORE',
-                score: String(score)
+                data: score
             })
         }
     }
