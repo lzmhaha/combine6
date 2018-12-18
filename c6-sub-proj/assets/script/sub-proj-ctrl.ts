@@ -66,12 +66,17 @@ export default class NewClass extends cc.Component {
         wx.getUserCloudStorage({
             keyList: ['score'],
             success: (result) => {
-                let maxScore: number = Number(result.KVDataList[0].value) || 0;
+                let maxScore: number = Number(result.KVDataList[0] && result.KVDataList[0].value) || 0;
                 if(maxScore < score) {
                     wx.setUserCloudStorage({
                         KVDataList: [{key: 'score', value: String(score)}]
                     })
                 }
+            },
+            fail: () => {
+                wx.setUserCloudStorage({
+                    KVDataList: [{key: 'score', value: String(score)}]
+                })
             }
         })
     }
@@ -88,9 +93,9 @@ export default class NewClass extends cc.Component {
             success: (res) => {
                 let userDatas: UserGameData[] = res.data;
                 userDatas.sort((d1, d2) => {
-                    let score1 = Number(d1.KVDataList[0].value) || 0;
-                    let score2 = Number(d2.KVDataList[0].value) || 0;
-                    return score1 - score2;
+                    let score1 = Number(d1.KVDataList[0] && d1.KVDataList[0].value) || 0;
+                    let score2 = Number(d2.KVDataList[0] && d2.KVDataList[0].value) || 0;
+                    return score2 - score1;
                 });
 
                 for(let i = 0; i < userDatas.length; i++) {
@@ -105,12 +110,10 @@ export default class NewClass extends cc.Component {
                         item.getChildByName('head').getComponent(cc.Sprite).spriteFrame = new cc.SpriteFrame(tex);
                         let name = item.getChildByName('name').getComponent(cc.Label);
                         name.string = d.nickname;
-                        if(d.avatarUrl === this._userInfo.avatarUrl) {
-                            name.node.color.fromHEX('#ECF14A');
-                        } else {
-                            name.node.color.fromHEX('#FFFFFF');
-                        }
-                        item.getChildByName('score').getComponent(cc.Label).string = d.KVDataList[0].value;
+                        let c = cc.color()
+                        c.fromHEX(d.avatarUrl === this._userInfo.avatarUrl ? '#ECF14A' : '#FFFFFF')
+                        name.node.color = c;
+                        item.getChildByName('score').getComponent(cc.Label).string = d.KVDataList[0] && d.KVDataList[0].value || '0';
                     }
                     this.content.addChild(item);
                 }
